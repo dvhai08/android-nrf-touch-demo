@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageButton
+            android:id="@+id/ibLockOnFragmentSetUp"
+            android:layout_margin="8dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_lock_on"
+            android:padding="8dip"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <ImageButton
+            android:id="@+id/ibLockOffFragmentSetUp"
+            android:layout_margin="8dip"
+            android:padding="8dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_lock_off"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+        <ImageButton
+            android:id="@+id/ibVibrateOnFragmentSetUp"
+            android:layout_margin="8dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_vibrate_on"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:padding="8dip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+        <ImageButton
+            android:id="@+id/ibVibrateOffFragmentSetUp"
+            android:padding="8dip"
+            android:layout_margin="8dip"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_vibrate_off"
+            android:layout_weight="1"
+            android:background="@drawable/bg_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageButton
+            android:id="@+id/ibOpenTrunkFragmentSetUp"
+
+            android:padding="8dip"
+            android:background="@drawable/bg_button"
+            android:src="@drawable/trunk"
+            android:textColor="@android:color/white"
+            android:text="@string/fingbike"
+            android:layout_margin="8dip"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+        <ImageButton
+            android:id="@+id/ibFindBikeFragmentSetUp"
+            android:padding="8dip"
+            android:background="@drawable/bg_button"
+            android:src="@drawable/findbike"
+            android:textColor="@android:color/white"
+            android:text="@string/fingbike"
+            android:layout_margin="8dip"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</LinearLayout>
