@@ -219,15 +219,9 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         }
     }
 
-    public void vibrate(boolean vibrateOn){
-        if(vibrateOn){
-            mBluetoothLeService.writeRXCharacteristic(Protocol.setVibrateOn(mIkyDevice.getPin()));
-
-        }else{
-            mBluetoothLeService.writeRXCharacteristic(Protocol.setVibrateOff(mIkyDevice.getPin()));
-        }
+    public void control_output(byte deviceNum, byte status){
+            mBluetoothLeService.writeRXCharacteristic(Protocol.control__output(mIkyDevice.getPin(), deviceNum, status));
     }
-
 
     public void sendCommandReadStatus(){
         if(mIkyDevice != null) {
@@ -243,36 +237,25 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
         byte[] bytes = event.values;
         Log.d(TAG, "eventReceived " + CommonUtils.convertByteToString(bytes));
 
-        if(bytes[1] == Protocol.APP_OPCODE_READSTATUS){
+        Log.d(TAG, "bytes[1] " + String.format("%X", bytes[1]));
+
+        if(bytes[Protocol.OPCODE_OFFSET] == Protocol.OPCODE_READSTATUS){
             //CA 84 7 F0 DE C7 81 0 0 63 79
             if(bytes.length > 9) {
                 try {
                     BusEvent.UpdateStatus eventUpdateStatus = new BusEvent.UpdateStatus();
-                    if (bytes[7] == 0) {
-                        eventUpdateStatus.bLock = false;
-                    } else {
-                        eventUpdateStatus.bLock = true;
-                    }
+                    eventUpdateStatus.bDev1Status = bytes[7] != 0;
 
-                    if (bytes[8] == 0) {
-                        eventUpdateStatus.bVibrate = false;
-                    } else {
-                        eventUpdateStatus.bVibrate = true;
-                    }
+                    eventUpdateStatus.bDev2Status = bytes[8] != 0;
 
-                    eventUpdateStatus.battery = bytes[9];
+                    eventUpdateStatus.bDev3Status = bytes[9] != 0;
 
                     eventPosterHelper.postEventSafely(eventUpdateStatus);
                 }catch (Exception e){
                     e.printStackTrace();
                 }
-
             }
-        }else if(bytes[1] == Protocol.APP_OPCODE_ALARM){
-
-            notificationHelper.show("Cảnh báo chế độ rung");
-
-        }else if(bytes[1] == Protocol.APP_OPCODE_LOGON){
+        }else if(bytes[Protocol.OPCODE_OFFSET] == Protocol.APP_OPCODE_LOGON){
             try {
                 byte statusCode = bytes[3];
                 if (statusCode != Protocol.STATUS_CODE_SUCCESS) {
@@ -285,58 +268,28 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 deleteIkyDevice();
             }
 
-        }else if(bytes[1] == Protocol.APP_OPCODE_RENAME){
+        }else if(bytes[Protocol.OPCODE_OFFSET] == Protocol.APP_OPCODE_RENAME){
             BusEvent.UpdateName updateName = new BusEvent.UpdateName();
             try {
                 byte statusCode = bytes[3];
-                if (statusCode == Protocol.STATUS_CODE_SUCCESS) {
-                    updateName.isSuccess = true;
-                } else {
-                    updateName.isSuccess = false;
-                }
+                updateName.isSuccess = statusCode == Protocol.STATUS_CODE_SUCCESS;
             }catch (Exception e){
                 e.printStackTrace();
                 updateName.isSuccess = false;
             }
             eventPosterHelper.postEventSafely(updateName);
 
-        }else if(bytes[1] == Protocol.APP_OPCODE_CHANGEPIN){
+        }else if(bytes[Protocol.OPCODE_OFFSET] == Protocol.APP_OPCODE_CHANGEPIN){
             BusEvent.UpdatePin updatePin = new BusEvent.UpdatePin();
             try {
                 byte statusCode = bytes[3];
-                if (statusCode == Protocol.STATUS_CODE_SUCCESS) {
-                    updatePin.isSuccess = true;
-                } else {
-                    updatePin.isSuccess = false;
-                }
+                updatePin.isSuccess = statusCode == Protocol.STATUS_CODE_SUCCESS;
             }catch (Exception e){
                 e.printStackTrace();
                 updatePin.isSuccess = false;
             }
             eventPosterHelper.postEventSafely(updatePin);
-        }else if(bytes[1] == Protocol.APP_OPCODE_RSSI){
-            //CA 8D 8 7F CE 7B 20 1 32 50 50 BB
-
-            if(bytes.length == 12) {
-                BusEvent.EventLocation eventLocation = new BusEvent.EventLocation(
-                        bytes[7] == 1 ? true : false,
-                        bytes[8],
-                        bytes[9],
-                        bytes[10], (byte) -1);
-                eventPosterHelper.postEventSafely(eventLocation);
-
-            }else if(bytes.length == 13){
-
-                BusEvent.EventLocation eventLocation = new BusEvent.EventLocation(
-                        bytes[7] == 1 ? true : false,
-                        bytes[8],
-                        bytes[9],
-                        bytes[10], bytes[11]);
-                eventPosterHelper.postEventSafely(eventLocation);
-
-            }
-
-        }else if(bytes[1] == Protocol.APP_OPCODE_VERSION){
+        }else if(bytes[Protocol.OPCODE_OFFSET] == Protocol.OPCODE_VERSION){
 
             //0xCA 0x8F 0x05 0x31 0x2E 0x30 0x2E 0x38 0xF5
             if(bytes.length > 5 ){
@@ -347,64 +300,7 @@ public class MainPresenter extends BasePresenter<MainMvpView> {
                 }
                 String sVersion = new String(version);
                 eventPosterHelper.postEventSafely(new BusEvent.EventVersion(sVersion));
-
             }
-
-        }else if(bytes[1] == Protocol.APP_OPCODE_START_EMERGENCY){
-            BusEvent.StartEmergency startEmergency = new BusEvent.StartEmergency();
-            try {
-                byte statusCode = bytes[3];
-                startEmergency.status = statusCode;
-                if (statusCode == Protocol.STATUS_CODE_SUCCESS) {
-                    startEmergency.isSuccess = true;
-                } else {
-                    startEmergency.isSuccess = false;
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-                startEmergency.isSuccess = false;
-                startEmergency.status = Protocol.STATUS_CODE_MALFUNCTION;
-            }
-            eventPosterHelper.postEventSafely(startEmergency);
-
-        }
-        else if(bytes[1] == Protocol.APP_OPCODE_CHANGE_PIN_SMARTKEY){
-            BusEvent.UpdatePinSmartkey updatePinSmartkey = new BusEvent.UpdatePinSmartkey();
-            try {
-                byte statusCode = bytes[3];
-                if (statusCode == Protocol.STATUS_CODE_SUCCESS) {
-                    updatePinSmartkey.isSuccess = true;
-                } else {
-                    updatePinSmartkey.isSuccess = false;
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-                updatePinSmartkey.isSuccess = false;
-            }
-            eventPosterHelper.postEventSafely(updatePinSmartkey);
-
-        }
-        else if(bytes[1] == Protocol.APP_OPCODE_GET_PIN_SMARTKEY){
-            //CA 9E D 49 CF 21 ED 31 32 33 35 36 36 36 36 36 FF
-            BusEvent.GetPinSmartkey getPinSmartkey = new BusEvent.GetPinSmartkey();
-            try {
-                if(bytes[2] ==  (Protocol.PIN_ENCRYPT_LENGTH  + Protocol.PIN_SMARTKEY_LENGTH)){
-                    byte[] pin = new byte[Protocol.PIN_SMARTKEY_LENGTH];
-                    for (int i = 0; i < Protocol.PIN_SMARTKEY_LENGTH; i++) {
-                        pin[i] = bytes[i+7];
-                    }
-                    getPinSmartkey.pin = new String(pin);
-                    getPinSmartkey.isSuccess = true;
-                }
-                else {
-                    getPinSmartkey.isSuccess = false;
-                }
-            }catch (Exception e){
-                e.printStackTrace();
-                getPinSmartkey.isSuccess = false;
-            }
-            eventPosterHelper.postEventSafely(getPinSmartkey);
-
         }
 
         if(isViewAttached()){

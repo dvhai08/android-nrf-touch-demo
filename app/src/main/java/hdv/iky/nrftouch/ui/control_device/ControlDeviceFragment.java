@@ -38,7 +38,9 @@ public class ControlDeviceFragment extends Fragment implements ControlDeviceMvpV
     @Inject
     ControlDevicePresenter setupPresenter;
 
-    private boolean bLockStatus = true;
+    private boolean bDev1Status = true;
+    private boolean bDev2Status = true;
+    private boolean bDev3Status = true;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,33 +71,68 @@ public class ControlDeviceFragment extends Fragment implements ControlDeviceMvpV
     }
 
     @OnClick(R.id.ibFragmentControlDev1)
-    void onClickedFindBike() {
-        ((MainActivity) getActivity()).getMainPresenter().findBike();
+    void onClickedControlDev1()
+    {
+        if(bDev1Status)
+        {
+            ((MainActivity)getActivity()).getMainPresenter().control_output((byte)0x01, (byte)0x00);
+        }
+        else
+        {
+            ((MainActivity) getActivity()).getMainPresenter().control_output((byte)0x01, (byte)0x01);
+        }
     }
 
     @OnClick(R.id.ibFragmentControlDev2)
-    void onClickedOpenTrunk() {
-        ((MainActivity) getActivity()).getMainPresenter().openTrunk();
+    void onClickedControlDev2()
+    {
+        if(bDev2Status)
+        {
+            ((MainActivity)getActivity()).getMainPresenter().control_output((byte)0x02, (byte)0x00);
+        }
+        else
+        {
+            ((MainActivity) getActivity()).getMainPresenter().control_output((byte)0x02, (byte)0x01);
+        }
     }
 
     @OnClick(R.id.ibFragmentControlDev3)
-    void onClickedLockOn()
+    void onClickedControlDev3()
     {
-        if(bLockStatus){
-            ((MainActivity)getActivity()).getMainPresenter().lock(false);
-        }else {
-            ((MainActivity) getActivity()).getMainPresenter().lock(true);
+        if(bDev3Status)
+        {
+            ((MainActivity)getActivity()).getMainPresenter().control_output((byte)0x03, (byte)0x00);
+        }
+        else
+        {
+            ((MainActivity) getActivity()).getMainPresenter().control_output((byte)0x03, (byte)0x01);
         }
     }
 
     @Override
-    public void updateStatusLock(boolean value) {
-        bLockStatus = value;
-        if (value) {
-            ibFragmentControlDev1.setImageResource(R.drawable.ic_lock_on);
+    public void updateStatusDevice(boolean bDev1,boolean bDev2,boolean bDev3) {
+        bDev1Status = bDev1;
+        bDev2Status = bDev2;
+        bDev3Status = bDev3;
+
+        if (bDev1) {
+            ibFragmentControlDev1.setImageResource(R.drawable.ic_status_on);
         } else {
-            ibFragmentControlDev1.setImageResource(R.drawable.ic_lock_off);
+            ibFragmentControlDev1.setImageResource(R.drawable.ic_status_off);
         }
+
+        if (bDev2) {
+            ibFragmentControlDev2.setImageResource(R.drawable.ic_status_on);
+        } else {
+            ibFragmentControlDev2.setImageResource(R.drawable.ic_status_off);
+        }
+
+        if (bDev3) {
+            ibFragmentControlDev3.setImageResource(R.drawable.ic_status_on);
+        } else {
+            ibFragmentControlDev3.setImageResource(R.drawable.ic_status_off);
+        }
+
         updateStatusConnecttion(true);
     }
 

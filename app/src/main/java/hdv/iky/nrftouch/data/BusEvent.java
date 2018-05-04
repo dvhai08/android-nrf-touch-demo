@@ -22,11 +22,9 @@ public class BusEvent {
 
     public static class UpdateStatus {
 
-        public boolean bLock;
-
-        public boolean bVibrate;
-
-        public byte battery;
+        public boolean bDev1Status;
+        public boolean bDev2Status;
+        public boolean bDev3Status;
 
     }
 

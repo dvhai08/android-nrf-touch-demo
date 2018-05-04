@@ -15,31 +15,31 @@ public class Protocol {
     public static byte HEADER = (byte) (byte) 0xCA;
     public static byte OPCODE_FINDBYTE = (byte) 0x7;
     public static byte OPCODE_SETLOCK = (byte) 0x2;
-    public static byte OPCODE_SETVIBRATE = (byte) 0x3;
-    public static byte OPCODE_READSTATUS = (byte) 0x4;
+    public static byte OPCODE_CONTROL_OUTPUT = (byte) 0x3;
+    public static byte OPCODE_READSTATUS = (byte) 0x2;
     public static byte OPCODE_LOGON = (byte) 0x1;
     public static byte OPCODE_RENAME = (byte) 0x6;
     public static byte OPCODE_CHANGEPIN = (byte) 0x5;
     public static byte OPCODE_OPENTRUNK = (byte) 0x9;
     public static byte OPCODE_CONFIGURE_RSSI = (byte) 0x0B;
-    public static byte OPCODE_VERSION = (byte) 0x0F;
+    public static byte OPCODE_VERSION = (byte) 0x06;
     public static byte OPCODE_START_EMERGENCY = (byte) 0x1C;
     public static byte OPCODE_CHANGE_PIN_SMARTKEY = (byte) 0x1D;
     public static byte OPCODE_GET_PIN_SMARTKEY = (byte) 0x1E;
 
-    public static byte APP_OPCODE_FINDBYTE = (byte) 0x87;
+
     public static byte APP_OPCODE_SETLOCK = (byte) 0x82;
     public static byte APP_OPCODE_SETVIBRATE = (byte) 0x83;
-    public static byte APP_OPCODE_READSTATUS = (byte) 0x84;
-    public static byte APP_OPCODE_LOGON = (byte) 0x81;
+
+    public static byte APP_OPCODE_LOGON = (byte) 0x01;
     public static byte APP_OPCODE_ALARM = (byte) 0x88;
     public static byte APP_OPCODE_RENAME = (byte) 0x86;
     public static byte APP_OPCODE_CHANGEPIN = (byte) 0x85;
-    public static byte APP_OPCODE_START_EMERGENCY = (byte) 0x9C;
-    public static byte APP_OPCODE_CHANGE_PIN_SMARTKEY = (byte) 0x9D;
-    public static byte APP_OPCODE_GET_PIN_SMARTKEY = (byte) 0x9E;
-    public static byte APP_OPCODE_RSSI = (byte) 0x8D;
-    public static byte APP_OPCODE_VERSION = (byte) 0x8F;
+
+
+
+
+
 
 
     public static byte STATUS_CODE_SUCCESS = (byte) 0x0;
@@ -49,6 +49,8 @@ public class Protocol {
 
     public static byte PIN_ENCRYPT_LENGTH = (byte) 0x04;
     public static byte PIN_SMARTKEY_LENGTH = (byte) 0x09;
+
+    public static byte OPCODE_OFFSET = (byte) 0x02;
 
     public static byte[] generateCmd(byte opcode, String pin, byte[] data){
         try {
@@ -122,12 +124,12 @@ public class Protocol {
         return generateCmd(OPCODE_SETLOCK,pin, new byte[]{0});
     }
 
-    public static byte[] setVibrateOn(String pin){
-        return generateCmd(OPCODE_SETVIBRATE,pin, new byte[]{1});
+    public static byte[] control__output(String pin,byte deviceNum, byte status){
+        return generateCmd(OPCODE_CONTROL_OUTPUT,pin, new byte[]{deviceNum,status});
     }
 
     public static byte[] setVibrateOff(String pin){
-        return generateCmd(OPCODE_SETVIBRATE,pin, new byte[]{0});
+        return generateCmd(OPCODE_CONTROL_OUTPUT,pin, new byte[]{0});
     }
 
     public static byte[] readStatus(String pin){

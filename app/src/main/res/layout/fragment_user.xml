@@ -10,7 +10,7 @@
     <TextView
         android:clickable="true"
         android:id="@+id/tvDeviceFragmentUser"
-        android:text="Thông tin thiết bị"
+        android:text="Thiết bị: nrf_touch"
         android:textColor="@android:color/black"
         android:padding="15dip"
         android:textAppearance="@android:style/TextAppearance.Medium"
@@ -43,14 +43,13 @@
         android:textAppearance="@android:style/TextAppearance.Medium"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-
     <View
         android:background="@drawable/bg_devider_userinfo"
         android:layout_width="match_parent"
         android:layout_height="1dip"/>
     <TextView
-        android:id="@+id/tvPINSmartkeyFragmentUser"
-        android:text="Nhập mã PIN SMART key"
+        android:id="@+id/tvChangeDeviceFragmentUser"
+        android:text="Đổi thiết bị"
         android:textColor="@android:color/black"
         android:padding="15dip"
         android:textAppearance="@android:style/TextAppearance.Medium"

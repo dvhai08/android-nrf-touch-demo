@@ -40,14 +40,16 @@ public class ControlDevicePresenter extends BasePresenter<ControlDeviceMvpView> 
     }
 
     @Subscribe
-    public void eventUpdateStatus(BusEvent.UpdateStatus event){
+    public void eventUpdateStatus(BusEvent.UpdateStatus event)
+    {
         if(isViewAttached()) {
-            getMvpView().updateStatusLock(event.bLock);
+            getMvpView().updateStatusDevice(event.bDev1Status,event.bDev2Status,event.bDev3Status);
         }
     }
 
     @Subscribe
-    public void eventConnect(BusEvent.Connect event){
+    public void eventConnect(BusEvent.Connect event)
+    {
         if(isViewAttached()) {
             if (event.state == BluetoothLeService.STATE_DISCONVERED) {
                 getMvpView().updateStatusConnecttion(true);

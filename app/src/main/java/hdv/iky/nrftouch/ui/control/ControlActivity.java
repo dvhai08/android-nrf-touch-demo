@@ -210,28 +210,9 @@ public class ControlActivity extends BaseActivity implements ControlMvpView {
     @Override
     public void updateImageForStatus(byte lock, byte vibrate) {
 
-        if(lock == (byte)0){
-            //ibLock.setImageResource(R.drawable.ic_unlock);
-        }else{
-            //ibLock.setImageResource(R.drawable.ic_lock);
-        }
 
-        if(vibrate == (byte)0){
-            ibVibrate.setImageResource(R.drawable.ic_vibrate_off);
-        }else{
-            ibVibrate.setImageResource(R.drawable.ic_vibrate_on);
-        }
 
     }
-
-//    @Override
-//    public void updateStatusConnecttion(boolean value) {
-//        if(value){
-//            ivStatusConnect.setImageResource(R.drawable.ic_connect);
-//        }else {
-//            ivStatusConnect.setImageResource(R.drawable.ic_disconnect);
-//        }
-//    }
 
 
     @Override

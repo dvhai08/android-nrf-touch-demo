@@ -20,7 +20,7 @@
         <TextView
             android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
             android:textColor="#3574B6"
-            android:text="@string/setup"
+            android:text="@string/Home"
             android:gravity="center"
             android:id="@+id/tvTitle"
             android:layout_width="match_parent"

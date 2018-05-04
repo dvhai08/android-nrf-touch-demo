@@ -150,11 +150,7 @@ public class ControlPresenter extends BasePresenter<ControlMvpView> {
 
 
     public boolean isAddedDevice(){
-        if(mIkyDevice == null || mIkyDevice.getAddress() == null){
-            return false;
-        }else{
-            return true;
-        }
+        return !(mIkyDevice == null || mIkyDevice.getAddress() == null);
     }
 
     public void clearDevice(){
@@ -241,18 +237,11 @@ public class ControlPresenter extends BasePresenter<ControlMvpView> {
     }
 
     public void clickVibrateButton(){
-        if(valueOfVibrate == (byte)0){
-            mBluetoothLeService.writeRXCharacteristic(Protocol.setVibrateOn(mIkyDevice.getPin()));
 
-        }else{
-            mBluetoothLeService.writeRXCharacteristic(Protocol.setVibrateOff(mIkyDevice.getPin()));
-        }
     }
 
     private void updateImageStatus(){
-        if(isViewAttached()){
-            getMvpView().updateImageForStatus(valueOfLock, valueOfVibrate);
-        }
+
     }
 
     private void showAlarm(){
@@ -265,7 +254,7 @@ public class ControlPresenter extends BasePresenter<ControlMvpView> {
     public void eventReceived(BusEvent.ReceiveData event){
 
         byte[] bytes = event.values;
-        if(bytes[1] == Protocol.APP_OPCODE_READSTATUS){
+        if(bytes[1] == Protocol.OPCODE_READSTATUS){
             valueOfLock = bytes[7];
             valueOfVibrate = bytes[8];
             updateImageStatus();

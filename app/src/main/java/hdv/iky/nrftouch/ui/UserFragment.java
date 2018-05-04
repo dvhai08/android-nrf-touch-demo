@@ -38,15 +38,6 @@ public class UserFragment extends Fragment {
         return fragmentView;
     }
 
-    @OnClick(R.id.tvDeviceFragmentUser)
-    void OnClickDevice(){
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.fragment, new DeviceFragment())
-                .addToBackStack(null)
-                .commit();
-
-    }
     @OnClick(R.id.tvChangeNameDeviceFragmentUser)
     void OnClickChangeName(){
 

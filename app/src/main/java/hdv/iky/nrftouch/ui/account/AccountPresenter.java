@@ -52,9 +52,9 @@ public class AccountPresenter extends BasePresenter<AccountMvpView> {
     }
 
     private void saveStatus(BusEvent.UpdateStatus event){
-        preferencesHelper.setValue(PreferencesHelper.PREF_STATUS_LOCK, event.bLock);
-        preferencesHelper.setValue(PreferencesHelper.PREF_STATUS_VIBRATE, event.bVibrate);
-        preferencesHelper.setValue(PreferencesHelper.PREF_STATUS_BATTERY, event.battery);
+        //preferencesHelper.setValue(PreferencesHelper.PREF_STATUS_LOCK, event.bLock);
+        //preferencesHelper.setValue(PreferencesHelper.PREF_STATUS_VIBRATE, event.bVibrate);
+        //preferencesHelper.setValue(PreferencesHelper.PREF_STATUS_BATTERY, event.battery);
     }
 
 

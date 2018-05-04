@@ -7,7 +7,7 @@ import hdv.iky.nrftouch.ui.base.MvpView;
  */
 public interface ControlDeviceMvpView extends MvpView {
 
-    void updateStatusLock(boolean value);
+    void updateStatusDevice(boolean bDev1,boolean bDev2,boolean bDev3);
 
     void updateStatusConnecttion(boolean value);
 }

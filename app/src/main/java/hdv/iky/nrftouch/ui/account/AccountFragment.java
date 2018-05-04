@@ -18,9 +18,7 @@ import hdv.iky.nrftouch.R;
 import hdv.iky.nrftouch.data.DataManager;
 import hdv.iky.nrftouch.data.model.IkyDevice;
 import hdv.iky.nrftouch.ui.ChangeNameFragment;
-import hdv.iky.nrftouch.ui.ChangePINSmartkeyFragment;
 import hdv.iky.nrftouch.ui.ChangePassFragment;
-import hdv.iky.nrftouch.ui.DeviceFragment;
 import hdv.iky.nrftouch.ui.UserFragment;
 import hdv.iky.nrftouch.ui.base.BaseActivity;
 import hdv.iky.nrftouch.ui.main.MainActivity;
@@ -83,8 +81,7 @@ public class AccountFragment extends Fragment implements AccountMvpView {
                     public void onNext(IkyDevice ikyDevice) {
 
                         if(ikyDevice != null ){
-                            //tvInforUser.setText(ikyDevice.getInforUser());
-
+                            setNameDevice(ikyDevice.getName());
                         }
                     }
                 });
@@ -104,16 +101,6 @@ public class AccountFragment extends Fragment implements AccountMvpView {
         FragmentManager fm = getActivity().getSupportFragmentManager();
         fm.beginTransaction()
                 .replace(R.id.fragment, new UserFragment())
-                .addToBackStack(null)
-                .commit();
-
-    }
-
-    @OnClick(R.id.tvDeviceFragmentUser)
-    void OnClickDevice(){
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.fragment, new DeviceFragment())
                 .addToBackStack(null)
                 .commit();
 
@@ -141,13 +128,8 @@ public class AccountFragment extends Fragment implements AccountMvpView {
 
     }
 
-    @OnClick(R.id.tvPINSmartkeyFragmentUser)
-    void OnClickChangePINSmartkey(){
-        FragmentManager fm = getActivity().getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.fragment, new ChangePINSmartkeyFragment())
-                .addToBackStack(null)
-                .commit();
+    private void setNameDevice(String ss){
+        tvDeviceFragmentUser.setText(ss);
     }
 
 }

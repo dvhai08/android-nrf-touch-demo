@@ -4,9 +4,7 @@ import dagger.Component;
 import hdv.iky.nrftouch.injection.PerActivity;
 import hdv.iky.nrftouch.injection.module.ActivityModule;
 import hdv.iky.nrftouch.ui.ChangeNameFragment;
-import hdv.iky.nrftouch.ui.ChangePINSmartkeyFragment;
 import hdv.iky.nrftouch.ui.ChangePassFragment;
-import hdv.iky.nrftouch.ui.DeviceFragment;
 import hdv.iky.nrftouch.ui.InforFragment;
 import hdv.iky.nrftouch.ui.SplashActivity;
 import hdv.iky.nrftouch.ui.UserFragment;
@@ -32,8 +30,6 @@ public interface ActivityComponent {
 
     void inject(UserFragment userFragment);
 
-    void inject(DeviceFragment deviceFragment);
-
     void inject(ChangePassFragment changePassFragment);
 
     void inject(MainOldActivity mainOldActivity);
@@ -41,7 +37,5 @@ public interface ActivityComponent {
     void inject(ChangeNameFragment changeNameFragment);
 
     void inject(InforFragment inforFragment);
-
-    void inject(ChangePINSmartkeyFragment changePINSmartkeyFragment);
 }
 

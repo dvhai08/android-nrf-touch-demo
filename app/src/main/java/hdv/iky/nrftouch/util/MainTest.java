@@ -31,7 +31,6 @@ public class MainTest {
 //        System.out.println(CommonUtils.convertByteToString(Protocol.setVibrateOff("8888")));
 //        System.out.println(CommonUtils.convertByteToString(Protocol.readStatus("8888")));
         System.out.println(CommonUtils.convertByteToString(Protocol.changePin("8888","3333")));
-        ;
         testVersion();
 //        161D33827F06197BD2597AF789EEBC87
 
